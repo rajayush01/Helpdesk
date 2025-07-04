@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 const DashboardHeader = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
-    navigate('/login');
+    navigate('/');
   }
   return (
     <div className='bg-[#55D6C2] flex flex-row justify-between items-center p-4 min-h-[90px]'>
