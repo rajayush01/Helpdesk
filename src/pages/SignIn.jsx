@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const DEFAULT_USER = {
+  username: "demo_user",
+  password: "demo_pass123",
+  email: "demo@example.com"
+};
+
 const SignIn = () => {
   const nav = useNavigate();
   const [username, setUserName] = useState("");
   const [pass, setPass] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
+    setError("");
 
     setTimeout(() => {
-      nav("/user");
+      if (username === DEFAULT_USER.username && pass === DEFAULT_USER.password) {
+        nav("/user");
+      } else {
+        setError("Invalid username or password");
+      }
       setIsLoading(false);
     }, 1000);
   }
@@ -38,6 +50,7 @@ const SignIn = () => {
             value={pass}
             onChange={e => setPass(e.target.value)}
           />
+          {error && <div className="text-red-600 font-medium">{error}</div>}
           <button
             type="submit"
             disabled={isLoading}
