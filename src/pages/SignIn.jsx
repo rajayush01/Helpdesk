@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const DEFAULT_USER = {
-  username: "demo_user",
-  password: "demo_pass123",
-  email: "demo@example.com"
-};
+const USERS = [
+  {
+    username: "Operation_Team",
+    password: "op123",
+    redirect: "/operation-team"
+  },
+  {
+    username: "technical_support",
+    password: "support123",
+    redirect: "/technical-support"
+  },
+  {
+    username: "customer_user",
+    password: "cust123",
+    redirect: "/user"
+  }
+];
+
 
 const SignIn = () => {
   const nav = useNavigate();
@@ -15,19 +28,24 @@ const SignIn = () => {
   const [error, setError] = useState("");
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
+  e.preventDefault();
+  setIsLoading(true);
+  setError("");
 
-    setTimeout(() => {
-      if (username === DEFAULT_USER.username && pass === DEFAULT_USER.password) {
-        nav("/user");
-      } else {
-        setError("Invalid username or password");
-      }
-      setIsLoading(false);
-    }, 1000);
-  }
+  setTimeout(() => {
+    const foundUser = USERS.find(
+      user => user.username === username && user.password === pass
+    );
+
+    if (foundUser) {
+      nav(foundUser.redirect);
+    } else {
+      setError("Invalid username or password");
+    }
+    setIsLoading(false);
+  }, 1000);
+}
+
 
   return (
     <div className='bg-[#55D6C2] h-screen flex justify-center items-center'>
