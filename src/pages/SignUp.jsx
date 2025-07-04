@@ -13,6 +13,7 @@ const SignUp = () => {
     setIsLoading(true);
 
     setTimeout(() => {
+      console.log("Registered new user:", { username, pass, email });
       nav("/user");
       setIsLoading(false);
     }, 1000);
